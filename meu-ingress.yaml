@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: meu-ingress
+  namespace: meunamespace
+spec:
+  rules:
+  - host: meuapp.com
+    http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: meu-service
+            port:
+              number: 80

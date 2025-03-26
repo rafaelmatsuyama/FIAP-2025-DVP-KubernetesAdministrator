@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: meu-statefulset
+  namespace: meunamespace
+spec:
+  replicas: 3
+  serviceName: "meu-service"
+  selector:
+    matchLabels:
+      app: meuapp
+  template:
+    metadata:
+      labels:
+        app: meuapp
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: meu-volume
+          mountPath: /mnt/data
+  volumeClaimTemplates:
+  - metadata:
+      name: meu-volume
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
